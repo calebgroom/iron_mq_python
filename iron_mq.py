@@ -5,6 +5,7 @@ try:
 except:
     import simplejson as json
 
+
 class Queue:
     client = None
     name = None
@@ -20,31 +21,26 @@ class Queue:
         self.client = mq.client
         self.name = name
 
-
     def info(self):
         """Execute an HTTP request to get details on a queue, and
         return it.
         """
-        
+
         url = "queues/%s" % (self.name,)
         result = self.client.get(url)
         return result["body"]
-
 
     def size(self):
         """Queue size"""
         return self.info()['size']
 
-
     def id(self):
         """Queue ID"""
         return self.info()['id']
 
-
     def total_messages(self):
         """Queue total messages count"""
         return self.info()['total_messages']
-
 
     def clear(self):
         """Executes an HTTP request to clear all contents of a queue.
@@ -53,7 +49,6 @@ class Queue:
         url = "queues/%s/clear" % (self.name,)
         result = self.client.post(url)
         return result['body']
-
 
     def delete(self,  message_id):
         """Execute an HTTP request to delete a message from queue.
@@ -66,7 +61,6 @@ class Queue:
         result = self.client.delete(url)
         return result["body"]
 
-
     def post(self, *messages):
         """Executes an HTTP request to create message on the queue.
         Creates queue if not existed.
@@ -74,18 +68,17 @@ class Queue:
         Arguments:
         messages -- An array of messages to be added to the queue.
         """
-        
+
         url = "queues/%s/messages" % (self.name,)
 
-        msgs = [{'body':msg} if isinstance(msg, basestring) else msg
+        msgs = [{'body': msg} if isinstance(msg, basestring) else msg
                 for msg in messages]
         data = json.dumps({"messages": msgs})
 
         result = self.client.post(url=url, body=data,
-                                  headers={"Content-Type":"application/json"})
+                                  headers={"Content-Type": "application/json"})
 
         return result['body']
-
 
     def get(self, max=None):
         """Executes an HTTP request to get a message off of a queue.
@@ -93,7 +86,7 @@ class Queue:
         Keyword arguments:
         max -- The maximum number of messages to pull. Defaults to 1.
         """
-        
+
         n = ""
         if max is not None:
             n = "&n=%s" % max
@@ -116,8 +109,8 @@ class IronMQ:
         if name is not None:
             self.name = name
         self.client = iron_core.IronClient(name=IronMQ.NAME,
-                version=IronMQ.VERSION, product="iron_mq", **kwargs)
-
+                                           version=IronMQ.VERSION,
+                                           product="iron_mq", **kwargs)
 
     def queues(self, page=None):
         """Execute an HTTP request to get a list of queues and return it.
@@ -129,14 +122,13 @@ class IronMQ:
         options = {}
         if page is not None:
             options['page'] = page
-        
+
         query = urllib.urlencode(options)
         url = "queues"
         if query != "":
             url = "%s?%s" % (url, query)
         result = self.client.get(url)
         return [queue["name"] for queue in result["body"]]
-
 
     def queue(self, queue_name):
         """Returns Queue object.
@@ -147,9 +139,7 @@ class IronMQ:
 
         return Queue(self, queue_name)
 
-
     # DEPRECATED
-
     def getQueues(self, page=None, project_id=None):
         return self.queues(page=page)
 

@@ -1,26 +1,27 @@
 from setuptools import setup
 
 setup(
-        name = "iron-mq",
-        py_modules = ["iron_mq"],
-        install_requires = ["iron_core"],
-        version = "0.3",
-        description = "Client library for IronMQ, a message queue in the cloud",
-        author = "Iron.io",
-        author_email = "thirdparty@iron.io",
-        url = "https://github.com/iron-io/iron_mq_python",
-        keywords = ["Iron.io", "IronMQ", "message", "queue", "MQ"],
-        test_suite='test',
-        classifiers = [
-                "Programming Language :: Python",
-                "Intended Audience :: Developers",
-                "Operating System :: OS Independent",
-                "License :: OSI Approved :: BSD License",
-                "Natural Language :: English",
-                "Topic :: Internet",
-                "Topic :: Software Development :: Libraries :: Python Modules",
-        ],
-        long_description = """\
+    name="iron-mq",
+    py_modules=["iron_mq"],
+    install_requires=["iron_core"],
+    version="0.3",
+    description="Client library for IronMQ, a message queue in the "
+                "cloud",
+    author="Iron.io",
+    author_email="thirdparty@iron.io",
+    url="https://github.com/iron-io/iron_mq_python",
+    keywords=["Iron.io", "IronMQ", "message", "queue", "MQ"],
+    test_suite='test',
+    classifiers=[
+        "Programming Language :: Python",
+        "Intended Audience :: Developers",
+        "Operating System :: OS Independent",
+        "License :: OSI Approved :: BSD License",
+        "Natural Language :: English",
+        "Topic :: Internet",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+    ],
+    long_description="""\
 IronMQ client library
 ---------------------
 
